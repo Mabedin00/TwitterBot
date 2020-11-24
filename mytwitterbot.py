@@ -94,15 +94,17 @@ def main():
 
 
     print("-------------Posting a tweet-------------")
-    event = get_event()
-    image_status = download_image(api, get_image(event["url"]))
-    message = "Today in year {y}, {e}".format(y =event["year"], e=event["event"])
-    print(message)
-    if (image_status == 1):
-        simple_twit.send_media_tweet(api, message, "temp.jpg")
-        os.remove("temp.jpg")
-    elif(image_status == 0):
-        simple_twit.send_tweet(api, message)
+    while True:
+        event = get_event()
+        image_status = download_image(api, get_image(event["url"]))
+        message = "Today in year {y}, {e}".format(y =event["year"], e=event["event"])
+        print(message)
+        if (image_status == 1):
+            simple_twit.send_media_tweet(api, message, "temp.jpg")
+            os.remove("temp.jpg")
+        elif(image_status == 0):
+            simple_twit.send_tweet(api, message)
+        time.sleep(900)
 
 
 
